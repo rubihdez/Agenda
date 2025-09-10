@@ -74,7 +74,7 @@ namespace Agenda
         }
         private void GuardarDatosEnArchivo()
         {
-            // Limpia la lista antes de agregar los nuevos datos
+            // Limpia la lista antes de agregar los nuevos das
             baseDatos.Personas.Clear();
 
             foreach (DataGridViewRow fila in dGVAgenda.Rows)
