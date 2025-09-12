@@ -50,6 +50,14 @@
             this.dGVAgenda.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dGVAgenda.BackgroundColor = System.Drawing.SystemColors.Control;
             this.dGVAgenda.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Rockwell", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dGVAgenda.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dGVAgenda.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dGVAgenda.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Columna1,
@@ -58,21 +66,13 @@
             this.Columna4,
             this.Columna5,
             this.Columna6});
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("Lucida Console", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dGVAgenda.DefaultCellStyle = dataGridViewCellStyle1;
             this.dGVAgenda.GridColor = System.Drawing.SystemColors.ActiveBorder;
             this.dGVAgenda.Location = new System.Drawing.Point(0, 11);
             this.dGVAgenda.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dGVAgenda.Name = "dGVAgenda";
             this.dGVAgenda.RowHeadersWidth = 51;
             this.dGVAgenda.RowTemplate.Height = 24;
-            this.dGVAgenda.Size = new System.Drawing.Size(846, 385);
+            this.dGVAgenda.Size = new System.Drawing.Size(1001, 437);
             this.dGVAgenda.TabIndex = 0;
             // 
             // Columna1
@@ -120,7 +120,7 @@
             this.stS.Location = new System.Drawing.Point(0, 422);
             this.stS.Name = "stS";
             this.stS.Padding = new System.Windows.Forms.Padding(1, 0, 10, 0);
-            this.stS.Size = new System.Drawing.Size(846, 26);
+            this.stS.Size = new System.Drawing.Size(1013, 26);
             this.stS.TabIndex = 1;
             this.stS.Text = "stS";
             // 
@@ -141,7 +141,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.ClientSize = new System.Drawing.Size(846, 448);
+            this.ClientSize = new System.Drawing.Size(1013, 448);
             this.Controls.Add(this.stS);
             this.Controls.Add(this.dGVAgenda);
             this.Font = new System.Drawing.Font("HoloLens MDL2 Assets", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));

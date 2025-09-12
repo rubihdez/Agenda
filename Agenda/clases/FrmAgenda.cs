@@ -25,7 +25,7 @@ namespace Agenda
         {
             InitializeComponent();
 
-            
+            dGVAgenda.Font = new Font("Segoe UI", 12);
             dGVAgenda.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
 
             
