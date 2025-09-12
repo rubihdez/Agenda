@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.dGVAgenda = new System.Windows.Forms.DataGridView();
             this.Columna1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Columna2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -36,16 +37,19 @@
             this.Columna4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Columna5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Columna6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.stS = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabelRegistros = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelFecha = new System.Windows.Forms.ToolStripStatusLabel();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
+            this.timer = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.dGVAgenda)).BeginInit();
-            this.statusStrip1.SuspendLayout();
+            this.stS.SuspendLayout();
             this.SuspendLayout();
             // 
             // dGVAgenda
             // 
+            this.dGVAgenda.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dGVAgenda.BackgroundColor = System.Drawing.SystemColors.Control;
+            this.dGVAgenda.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dGVAgenda.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dGVAgenda.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Columna1,
@@ -54,11 +58,21 @@
             this.Columna4,
             this.Columna5,
             this.Columna6});
-            this.dGVAgenda.Location = new System.Drawing.Point(12, 66);
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Lucida Console", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dGVAgenda.DefaultCellStyle = dataGridViewCellStyle1;
+            this.dGVAgenda.GridColor = System.Drawing.SystemColors.ActiveBorder;
+            this.dGVAgenda.Location = new System.Drawing.Point(0, 11);
+            this.dGVAgenda.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.dGVAgenda.Name = "dGVAgenda";
             this.dGVAgenda.RowHeadersWidth = 51;
             this.dGVAgenda.RowTemplate.Height = 24;
-            this.dGVAgenda.Size = new System.Drawing.Size(1006, 229);
+            this.dGVAgenda.Size = new System.Drawing.Size(846, 385);
             this.dGVAgenda.TabIndex = 0;
             // 
             // Columna1
@@ -66,55 +80,49 @@
             this.Columna1.HeaderText = "NOMBRE:";
             this.Columna1.MinimumWidth = 6;
             this.Columna1.Name = "Columna1";
-            this.Columna1.Width = 125;
             // 
             // Columna2
             // 
             this.Columna2.HeaderText = "APELLIDO PATERNO:";
             this.Columna2.MinimumWidth = 6;
             this.Columna2.Name = "Columna2";
-            this.Columna2.Width = 125;
             // 
             // Columna3
             // 
             this.Columna3.HeaderText = "APELLIDO MATERNO:";
             this.Columna3.MinimumWidth = 6;
             this.Columna3.Name = "Columna3";
-            this.Columna3.Width = 125;
             // 
             // Columna4
             // 
             this.Columna4.HeaderText = "DIRECCION";
             this.Columna4.MinimumWidth = 6;
             this.Columna4.Name = "Columna4";
-            this.Columna4.Width = 125;
             // 
             // Columna5
             // 
             this.Columna5.HeaderText = "TELEFONO";
             this.Columna5.MinimumWidth = 6;
             this.Columna5.Name = "Columna5";
-            this.Columna5.Width = 125;
             // 
             // Columna6
             // 
             this.Columna6.HeaderText = "CORREO";
             this.Columna6.MinimumWidth = 6;
             this.Columna6.Name = "Columna6";
-            this.Columna6.Width = 125;
             // 
-            // statusStrip1
+            // stS
             // 
-            this.statusStrip1.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.stS.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.stS.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabelRegistros,
             this.toolStripStatusLabelFecha});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 511);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1058, 26);
-            this.statusStrip1.TabIndex = 1;
-            this.statusStrip1.Text = "statusStrip1";
-            this.statusStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.statusStrip1_ItemClicked);
+            this.stS.Location = new System.Drawing.Point(0, 422);
+            this.stS.Name = "stS";
+            this.stS.Padding = new System.Windows.Forms.Padding(1, 0, 10, 0);
+            this.stS.Size = new System.Drawing.Size(846, 26);
+            this.stS.TabIndex = 1;
+            this.stS.Text = "stS";
             // 
             // toolStripStatusLabelRegistros
             // 
@@ -130,16 +138,19 @@
             // 
             // FrmAgenda
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1058, 537);
-            this.Controls.Add(this.statusStrip1);
+            this.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.ClientSize = new System.Drawing.Size(846, 448);
+            this.Controls.Add(this.stS);
             this.Controls.Add(this.dGVAgenda);
+            this.Font = new System.Drawing.Font("HoloLens MDL2 Assets", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.Name = "FrmAgenda";
             this.Text = "AGENDA";
             ((System.ComponentModel.ISupportInitialize)(this.dGVAgenda)).EndInit();
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
+            this.stS.ResumeLayout(false);
+            this.stS.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -148,8 +159,8 @@
         #endregion
 
         private System.Windows.Forms.DataGridView dGVAgenda;
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.StatusStrip stS;
+        private System.Windows.Forms.Timer timer;
         private System.Windows.Forms.DataGridViewTextBoxColumn Columna1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Columna2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Columna3;

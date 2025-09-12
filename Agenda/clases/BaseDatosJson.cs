@@ -13,7 +13,11 @@ namespace Agenda.clases
         public int TotalRegistros { get; set; }
         public DateTime UltimaActualizacion { get; set; }
     
-
+        public BaseDatosJson()
+        {
+        Personas=new List<Persona>();
+            UltimaActualizacion=DateTime.Now;
+        }
 
 
 }
