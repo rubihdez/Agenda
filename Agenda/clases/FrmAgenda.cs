@@ -15,23 +15,23 @@ using Newtonsoft.Json;
 
 namespace Agenda
 {
-    //valeria rubi castañeda hernandez
+    //valeria rubi castañeda hernandez 24130045
     public partial class FrmAgenda : Form
     {
-        // ruta del archivo JSON en la carpeta del ejecutable
+       
         private string rutaArchivo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "agenda.json");
 
         public FrmAgenda()
         {
             InitializeComponent();
 
-            dGVAgenda.Font = new Font("Segoe UI", 12);
+            dGVAgenda.Font = new Font("Century Gothic", 10);
             dGVAgenda.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
 
             
             CargarDatosDesdeArchivo();
 
-            // eventos para detectar cambios inmediatos en el DataGridView
+            // eventos para detectar cambios en el DataGridView
             dGVAgenda.CellValueChanged += dGVAgenda_CellValueChanged;
             dGVAgenda.UserAddedRow += dGVAgenda_UserChanged;
             dGVAgenda.UserDeletedRow += dGVAgenda_UserChanged;
