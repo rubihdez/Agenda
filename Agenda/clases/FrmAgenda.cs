@@ -15,75 +15,112 @@ using Newtonsoft.Json;
 
 namespace Agenda
 {
+    //valeria rubi castañeda hernandez
     public partial class FrmAgenda : Form
     {
-        private string rutaArchivo = "agenda.json"; //  nombre del archivo JSON
-        private bool cambiosPendientes = false;     //  bandera que nos dice si hubo cambios y necesitamos guardar
-        private BaseDatosJson baseDatos = new BaseDatosJson();  // aquí almacenamos la lista de personas cargada o para guardar
+        // ruta del archivo JSON en la carpeta del ejecutable
+        private string rutaArchivo = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "agenda.json");
+
         public FrmAgenda()
         {
             InitializeComponent();
+
+            dGVAgenda.Font = new Font("Segoe UI", 12);
+            dGVAgenda.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+
+            
             CargarDatosDesdeArchivo();
-            // Suscribir eventos
+
+            // eventos para detectar cambios inmediatos en el DataGridView
             dGVAgenda.CellValueChanged += dGVAgenda_CellValueChanged;
-            timer1.Tick += timer1_Tick;
-            timer1.Start(); // Empieza el temporizador
+            dGVAgenda.UserAddedRow += dGVAgenda_UserChanged;
+            dGVAgenda.UserDeletedRow += dGVAgenda_UserChanged;
+            dGVAgenda.CurrentCellDirtyStateChanged += dGVAgenda_CurrentCellDirtyStateChanged;
         }
-        private void CargarDatosDesdeArchivo()
+
+        private void dGVAgenda_CurrentCellDirtyStateChanged(object sender, EventArgs e)
         {
-            if (File.Exists(rutaArchivo))  // Verifica que el archivo exista
+            if (dGVAgenda.IsCurrentCellDirty)
             {
-                try
-                {
-                    string json = File.ReadAllText(rutaArchivo); // Lee el contenido
-                    baseDatos = JsonConvert.DeserializeObject<BaseDatosJson>(json); // Convierte JSON a objeto
-
-                    if (baseDatos == null) // Por si está vacío o da error
-                        baseDatos = new BaseDatosJson();
-
-                    ActualizarDataGrid();     // Mostrar en la tabla
-                    ActualizarStatusStrip();  // Actualizar la barra de estado
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show("Error al cargar archivo: " + ex.Message);
-                }
+               
+                dGVAgenda.CommitEdit(DataGridViewDataErrorContexts.Commit);
             }
         }
-        private void ActualizarDataGrid()
+
+        private void dGVAgenda_UserChanged(object sender, DataGridViewRowEventArgs e)
+        {
+            GuardarDatosEnArchivo();
+        }
+
+        private void dGVAgenda_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            GuardarDatosEnArchivo();
+        }
+
+        private void CargarDatosDesdeArchivo()
+        {
+            if (!File.Exists(rutaArchivo))
+            {
+                
+                var datosIniciales = new BaseDatosJson
+                {
+                    Personas = new List<Persona>(),
+                    TotalRegistros = 0,
+                    UltimaActualizacion = DateTime.Now
+                };
+
+                GuardarJson(datosIniciales);
+            }
+
+            try
+            {
+                string json = File.ReadAllText(rutaArchivo);
+                var baseDatos = JsonConvert.DeserializeObject<BaseDatosJson>(json);
+
+                if (baseDatos == null)
+                    baseDatos = new BaseDatosJson();
+
+                ActualizarDataGrid(baseDatos);
+                ActualizarStatusStrip(baseDatos);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error al cargar archivo: " + ex.Message);
+            }
+        }
+
+        private void ActualizarDataGrid(BaseDatosJson baseDatos)
         {
             dGVAgenda.Rows.Clear();
+
             foreach (var persona in baseDatos.Personas)
             {
                 dGVAgenda.Rows.Add(new object[]
                 {
-            persona.Nombre,
-            persona.ApellidoPaterno,
-            persona.ApellidoMaterno,
-            persona.Direccion,
-            persona.Telefono,
-            persona.Correo
+                    persona.Nombre,
+                    persona.ApellidoPaterno,
+                    persona.ApellidoMaterno,
+                    persona.Direccion,
+                    persona.Telefono,
+                    persona.Correo
                 });
             }
         }
 
-        private void ActualizarStatusStrip()
+        private void ActualizarStatusStrip(BaseDatosJson baseDatos)
         {
             toolStripStatusLabelRegistros.Text = $"Registros: {baseDatos.TotalRegistros}";
-            toolStripStatusLabelFecha.Text = $"Última actualización: {baseDatos.UltimaActualizacion.ToString("dd/MM/yyyy HH:mm:ss")}";
+            toolStripStatusLabelFecha.Text = $"Última actualización: {baseDatos.UltimaActualizacion:dd/MM/yyyy HH:mm:ss}";
         }
-        private void GuardarDatosEnArchivo()
-        {
-            // Limpia la lista antes de agregar los nuevos das
-            baseDatos.Personas.Clear();
 
+        private BaseDatosJson CargarDatosDesdeGrid()
+        {
+            var baseDatos = new BaseDatosJson();
             foreach (DataGridViewRow fila in dGVAgenda.Rows)
             {
-                // Ignorar la fila nueva (vacía) para no guardar datos incompletos
                 if (fila.IsNewRow) continue;
 
-                // Crea un objeto Persona con los datos de la fila
-                var persona = new Persona()
+                var persona = new Persona
                 {
                     Nombre = fila.Cells[0].Value?.ToString() ?? "",
                     ApellidoPaterno = fila.Cells[1].Value?.ToString() ?? "",
@@ -96,39 +133,31 @@ namespace Agenda
                 baseDatos.Personas.Add(persona);
             }
 
-            // actualiza el total y fecha
             baseDatos.TotalRegistros = baseDatos.Personas.Count;
             baseDatos.UltimaActualizacion = DateTime.Now;
-
-            var json = JsonConvert.SerializeObject(baseDatos, Newtonsoft.Json.Formatting.Indented);
-            File.WriteAllText(rutaArchivo, json);
-
-            // Resetea la bandera de cambios pendientes
-            cambiosPendientes = false;
-
-            // Actualiza el StatusStrip con la nueva info
-            ActualizarStatusStrip();
+            return baseDatos;
         }
 
-    
-    private void statusStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        private void GuardarDatosEnArchivo()
         {
-            //  método para evitar que el diseñador falle.
-        } 
-   
-private void dGVAgenda_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            cambiosPendientes = true; // Marca que hubo un cambio pendiente
+            var baseDatos = CargarDatosDesdeGrid();
+            GuardarJson(baseDatos);
+            ActualizarStatusStrip(baseDatos);
         }
 
-        // evento del temporizador (Timer)
-        private void timer1_Tick(object sender, EventArgs e)
+        private void GuardarJson(BaseDatosJson datos)
         {
-            if (cambiosPendientes)
+            var configuracion = new JsonSerializerSettings
             {
-                GuardarDatosEnArchivo(); // guarda solo si hubo cambios
-            }
+                Formatting = Newtonsoft.Json.Formatting.Indented,
+                DateFormatHandling = DateFormatHandling.IsoDateFormat,
+                NullValueHandling = NullValueHandling.Ignore
+            };
+
+            string json = JsonConvert.SerializeObject(datos, configuracion);
+            File.WriteAllText(rutaArchivo, json);
         }
 
-    } 
+       
+    }
 }

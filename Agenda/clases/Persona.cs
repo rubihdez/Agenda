@@ -14,5 +14,20 @@ namespace Agenda.clases
         public string Direccion { get; set; }
         public string Telefono { get; set; }
         public string Correo { get; set; }
+
+        public Persona()
+        {
+
+        }
+        public Persona(string nombre, string apellidoPaterno, string apellidoMaterno, string direccion, string telefono, string correo)
+        
+        {
+            Nombre = nombre;
+            ApellidoPaterno = apellidoPaterno;
+            ApellidoMaterno = apellidoMaterno;
+            Direccion = direccion;
+            Telefono = telefono;
+            Correo = correo;
+        }
     }
 }
